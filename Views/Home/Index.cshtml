@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity!.IsAuthenticated)
+{
+	<div class="d-flex flex-row align-items-center header__username--wrapper">
+		<a asp-controller="Account" asp-action="Profile" class="text-dark text-decoration-none header__nav-link">
+			Hello @User.Identity.Name!
+		</a>
+		<a asp-controller="Account" asp-action="Logout" class="nav-link btn btn-link text-dark">Logout</a>
+	</div>
+}
+else
+{
+	<a id="qsLoginBtn" asp-controller="Account" asp-action="Login" class="text-dark text-decoration-none header__nav-link">Login</a>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+	<div id="editor">@Html.Raw(ViewBag.HtmlContent)</div>
+</div>
+
+<script>
+    let jdQuill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    function handleSubmit() {
+        console.info('handleSubmit called');
+        document.getElementById('jdr').value = jdQuill.root.innerHTML;
+    };
+</script>
