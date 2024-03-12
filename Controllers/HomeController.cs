@@ -20,15 +20,22 @@ namespace TestApp.Controllers
             var options = new HtmlSanitizerOptions
             {
 				AllowedTags = new HashSet<string> { "b", "i", "u" },
-				AllowedAttributes = new HashSet<string> { "class" },
+				AllowedAttributes = new HashSet<string>(),
 			};
             var sanitizer = new HtmlSanitizer(options);
 
-			var rawEncodedHtml = "&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;hello world &amp;amp;lt;div&amp;amp;gt;test &amp;amp;amp;&amp;amp;lt;/div&amp;amp;gt;&amp;lt;/strong&amp;gt;&amp;lt;/p&amp;gt;";
+            // This mimics the HTML-Encoded message received from the client-side
+            // The decoded version of the message is "<b>asdf & asdfls &lt;b&gt;asdf &amp; asdfls&lt;/b&gt;</b>"
+            var rawEncodedHtml = "&lt;b&gt;asdf &amp; asdfls &amp;lt;b&amp;gt;asdf &amp;amp; asdfls&amp;lt;/b&amp;gt;&lt;/b&gt;";
+
+			// Decode the message content only once
 			var decodedHtml = WebUtility.HtmlDecode(rawEncodedHtml);
 
+			// Sanitize the content
 			var sanitizedHtml = sanitizer.Sanitize(decodedHtml);
-			//ViewBag.HtmlContent = WebUtility.HtmlDecode(sanitizedHtml);
+
+			// Call the API to save the message ...
+
 			ViewBag.HtmlContent = sanitizedHtml;
             return View();
 		}

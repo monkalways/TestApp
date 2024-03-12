@@ -18,7 +18,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
-		options.Cookie.Name = "SessionCookie"; // client-side cookie name (optional)
+		//options.Cookie.Name = "SessionCookie"; // client-side cookie name (optional)
 		//options.Cookie.MaxAge = TimeSpan.FromMinutes(15); // client-side cookie maxage (optional)
 		options.ExpireTimeSpan = TimeSpan.FromMinutes(15); // server-side session timeout
 		options.SlidingExpiration = true;
